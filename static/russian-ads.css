@@ -1,3 +1,6 @@
 body.query.db-russian-ads .sql pre {
   display: none;
 }
+body.query.db-russian-ads textarea.sql pre {
+  display: block;
+}
