@@ -4,6 +4,8 @@ The House Intelligence Committee released 3,517 Facebook ads that were
 reported to have been bought by the Russian Internet Research Agency as a set
 of redacted PDF files.
 
+Companion blog post: [Analyzing US Election Russian Facebook Ads](https://simonwillison.net/2018/Aug/6/russian-facebook-ads/)
+
 Ed Summers wrote a parser that converts those PDFs into a JSON file:
 https://github.com/edsu/irads
 
