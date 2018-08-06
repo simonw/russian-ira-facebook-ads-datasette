@@ -4,7 +4,6 @@ RUN apt install -y python3-dev gcc wget
 ADD russian-ads-metadata.yaml russian-ads-metadata.yaml
 ADD build_metadata.py build_metadata.py
 ADD fetch_and_build_russian_ads.py fetch_and_build_russian_ads.py
-ADD static static
 ADD plugins plugins
 RUN pip install pyyaml
 RUN python build_metadata.py
@@ -21,4 +20,4 @@ CMD datasette serve russian-ads.db --host 0.0.0.0 --cors --port 8001 \
   --config default_page_size:50 --config sql_time_limit_ms:3000 \
   --config num_sql_threads:10 --config facet_time_limit_ms:3000 \
   --config force_https_urls:1 \
-  --plugins-dir=plugins --static static:static
+  --plugins-dir=plugins
