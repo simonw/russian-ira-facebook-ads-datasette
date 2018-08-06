@@ -10,9 +10,9 @@ https://github.com/edsu/irads
 The script in this repository downloads that JSON file and converts it into a
 SQLite database for use with Datasette. Use it like this:
 
-    python pull_ads_json_and_convert_to_sqlite.py \
-        https://raw.githubusercontent.com/edsu/irads/master/ads.json \
-        ads.db
+    python fetch_and_build_russian_ads.py \
+        https://raw.githubusercontent.com/edsu/irads/master/site/index.json \
+        russian-ads.db
 
 This will produce a SQLite database called `ads.db`. You can then explore it
 locally with [Datasette](https://github.com/simonw/datasette) like so:
