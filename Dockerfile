@@ -9,7 +9,6 @@ ADD plugins plugins
 RUN pip install pyyaml
 RUN python build_metadata.py
 RUN pip install https://github.com/simonw/datasette/archive/filter-plugin-hook.zip
-RUN pip install datasette-vega
 RUN pip install datasette-json-html
 RUN pip install sqlite-utils
 RUN python fetch_and_build_russian_ads.py https://raw.githubusercontent.com/edsu/irads/master/site/index.json russian-ads.db
