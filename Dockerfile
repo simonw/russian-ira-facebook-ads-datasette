@@ -20,5 +20,5 @@ CMD datasette serve russian-ads.db --host 0.0.0.0 --cors --port 8001 \
   --inspect-file inspect-data.json -m russian-ads-metadata.json \
   --config default_page_size:50 --config sql_time_limit_ms:3000 \
   --config num_sql_threads:10 --config facet_time_limit_ms:3000 \
-  --config allow_sql:off --config force_https_urls:1 \
+  --config force_https_urls:1 \
   --plugins-dir=plugins --static static:static
