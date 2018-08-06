@@ -10,6 +10,7 @@ https://github.com/edsu/irads
 The script in this repository downloads that JSON file and converts it into a
 SQLite database for use with Datasette. Use it like this:
 
+    pip3 install sqlite-utils
     python fetch_and_build_russian_ads.py \
         https://raw.githubusercontent.com/edsu/irads/master/site/index.json \
         russian-ads.db
@@ -20,13 +21,14 @@ locally with [Datasette](https://github.com/simonw/datasette) like so:
     pip3 install datasette
     datasette ads.db
 
-I published it using Datasette Publish by running this command:
+To see the full customized interface you will need to install a custom branch of
+Datasette plus a custom Datasette plugin. See the Dockerfile, or do this:
 
-    datasette publish now ads.db \
-        -n irads-with-targeting-as-json \
-        --source="edsu/irads" \
-        --source_url="https://github.com/edsu/irads" \
-        --install=datasette-vega
-
-The resulting Datasette instance can be browsed here:
-https://irads-with-targeting-as-json.now.sh/
+    pip3 install https://github.com/simonw/datasette/archive/filter-plugin-hook.zip
+    pip3 install datasette-json-html
+    datasette russian-ads.db \
+      -m russian-ads-metadata.json \
+      --config default_page_size:50 --config sql_time_limit_ms:3000 \
+      --config num_sql_threads:10 --config facet_time_limit_ms:3000 \
+      --config allow_sql:off --config force_https_urls:1 \
+      --plugins-dir=plugins --static static:static
