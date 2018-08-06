@@ -28,6 +28,10 @@ description_html: |-
   most frequent targets</a> and see which adverts were assigned based on which
   targeting options.</p>
 
+  <p>Interested in the total spend? <a href="/russian-ads/total-spend">Here it is, broken down by currency</a>.</p>
+
+  <p>Full background on this project can be found on my blog: <a href="https://simonwillison.net/2018/Aug/6/russian-facebook-ads/">Analyzing US Election Russian Facebook Ads</a></p>
+
   <p>A big thanks to Ed Summers who <a href="https://github.com/edsu/irads">built the code</a>
   that extracts raw information and metadata from the PDFs released by Congress.</p>
 
@@ -48,6 +52,12 @@ databases:
         fts_table: ads_fts
         fts_pk: id
     queries:
+      total-spend: |-
+        select
+            spend_currency, sum(spend_usd), sum(spend_amount),
+            count(*) as num_ads
+        from display_ads
+        group by spend_currency
       faceted-targets: |-
         select
             target_id,
