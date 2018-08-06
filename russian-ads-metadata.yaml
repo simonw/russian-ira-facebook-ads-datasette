@@ -1,0 +1,81 @@
+title: Russian Internet Research Agency Facebook Ads
+source: simonw/russian-ira-facebook-ads-datasette
+source_url: https://github.com/simonw/russian-ira-facebook-ads-datasette
+extra_css_urls:
+- "/static/russian-ads.css"
+description_html: |-
+  <div style="max-width: 700px">
+
+  <p>The House Intelligence Committee released 3,517 Facebook ads that were
+  reported to have been bought by the Russian Internet Research Agency as a
+  set of redacted PDF files.</p>
+
+  <p>This tool lets you search and browse through those ads.</p>
+
+  <form action="/russian-ads/display_ads" method="GET">
+  <p><input name="_search" type="search"> <input type="submit" value="Search"></p>
+  </form>
+
+  <p>Example searches: <a href="/russian-ads/display_ads?_search=black+lives+matter">black lives matter</a>,
+  <a href="/russian-ads/display_ads?_search=patriot">patriot</a></p>
+
+  <p>You can <a href="/russian-ads/display_ads?_sort_desc=spend_usd">sort the adverts by $USD equivalent spent</a>
+  to see where the most money went. Conversion from rubles is calculated at
+  0.016 dollar per ruble.</p>
+
+  <p>One of the most interesting aspects of this data is the Facebook targeting
+  options that were used. You can <a href="/russian-ads/top_targets">explore the
+  most frequent targets</a> and see which adverts were assigned based on which
+  targeting options.</p>
+
+  <p>A big thanks to Ed Summers who <a href="https://github.com/edsu/irads">built the code</a>
+  that extracts raw information and metadata from the PDFs released by Congress.</p>
+
+  <p>The code by Simon Willison that loads that data into this Datasette instance is
+  <a href="https://github.com/simonw/russian-ira-facebook-ads-datasette">available on GitHub</a>.</p>
+
+  </div>
+databases:
+  russian-ads:
+    tables:
+      display_ads:
+        sortable_columns:
+        - impressions
+        - clicks
+        - spend_usd
+        - created
+        - ended
+        fts_table: ads_fts
+        fts_pk: id
+    queries:
+      faceted-targets: |-
+        select
+            target_id,
+            targets.name,
+            count(*) as n,
+            json_object(
+                "href", "/russian-ads/faceted-targets?targets=" || urllib_quote_plus(
+                    json_insert(:targets, '$[' || json_array_length(:targets) || ']', target_id)
+                ),
+                "label", json_insert(:targets, '$[' || json_array_length(:targets) || ']', target_id)
+            ) as apply_this_facet,
+            json_object(
+                "href", "/russian-ads/display_ads?_targets_json=" || urllib_quote_plus(
+                    json_insert(:targets, '$[' || json_array_length(:targets) || ']', target_id)
+                ),
+                "label", "See " || count(*) || " ads matching " || json_insert(:targets, '$[' || json_array_length(:targets) || ']', target_id)
+            ) as browse_these_ads
+        from ad_targets
+        join targets on ad_targets.target_id = targets.id
+        where
+            json_array_length(:targets) == 0 or
+            ad_id in (
+                select ad_id
+                from "ad_targets"
+                where "ad_targets".target_id in (select value from json_each(:targets))
+                group by "ad_targets".ad_id
+                having count(distinct "ad_targets".target_id) = json_array_length(:targets)
+            )
+            and target_id not in (select value from json_each(:targets))
+        group by
+            target_id order by n desc

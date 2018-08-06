@@ -11,7 +11,7 @@ The script in this repository downloads that JSON file and converts it into a
 SQLite database for use with Datasette. Use it like this:
 
     pip3 install sqlite-utils
-    python fetch_and_build_russian_ads.py \
+    python3 fetch_and_build_russian_ads.py \
         https://raw.githubusercontent.com/edsu/irads/master/site/index.json \
         russian-ads.db
 
@@ -25,7 +25,8 @@ To see the full customized interface you will need to install a custom branch of
 Datasette plus a custom Datasette plugin. See the Dockerfile, or do this:
 
     pip3 install https://github.com/simonw/datasette/archive/filter-plugin-hook.zip
-    pip3 install datasette-json-html
+    pip3 install datasette-json-html pyyaml
+    python3 build_metadata.py
     datasette russian-ads.db \
       -m russian-ads-metadata.json \
       --config default_page_size:50 --config sql_time_limit_ms:3000 \
