@@ -12,12 +12,11 @@ def regexp(pattern, value):
 @hookimpl
 def table_filter():
     async def inner(view, name, table, request):
-        # Hacky thing for ?_target=
+        # Hacky thing for ?_regexp=
         try:
             regexp = request.args["_regexp"][0]
         except (KeyError, IndexError):
             return None
-        # They can come in as JSON or as _target=foo&_target=bar
         return TableFilter(
             human_description_extras=[
                 'regexp matches "{}"'.format(regexp),
