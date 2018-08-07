@@ -13,7 +13,7 @@ description_html: |-
   <p>This tool lets you search and browse through those ads.</p>
 
   <form action="/russian-ads/display_ads" method="GET">
-  <p><input name="_search" type="search"> <input type="submit" value="Search"></p>
+    <p><input name="_search" type="search"> <input type="submit" value="Search"></p>
   </form>
 
   <p>Example searches: <a href="/russian-ads/display_ads?_search=black+lives+matter">black lives matter</a>,
@@ -37,6 +37,12 @@ description_html: |-
 
   <p>The code by Simon Willison that loads that data into this Datasette instance is
   <a href="https://github.com/simonw/russian-ira-facebook-ads-datasette">available on GitHub</a>.</p>
+
+
+  <p>Advanced feature: search by Python compatible regular expression:</p>
+  <form action="/russian-ads/display_ads" method="GET">
+    <p><input name="_regexp" type="search"> <input type="submit" value="Search"></p>
+  </form>
 
   </div>
 databases:
