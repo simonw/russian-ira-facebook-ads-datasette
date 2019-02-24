@@ -69,8 +69,8 @@ def main(dbfile, url):
     ads.upsert_all(ads_to_upsert, pk="id")
     targets.upsert_all(targets_to_upsert, pk="id")
     ad_targets.insert_all(ad_targets_to_insert, foreign_keys=(
-        ("ad_id", "INTEGER", "ads", "id"),
-        ("target_id", "TEXT", "targets", "id"),
+        ("ad_id", "ads", "id"),
+        ("target_id", "targets", "id"),
     ))
     ad_targets.create_index(["target_id"])
     ad_targets.create_index(["ad_id"])
