@@ -11,12 +11,12 @@ RUN python build_metadata.py
 RUN pip install https://github.com/simonw/datasette/archive/filter-plugin-hook.zip
 RUN pip install datasette-json-html
 RUN pip install sqlite-utils
-RUN python fetch_and_build_russian_ads.py https://raw.githubusercontent.com/edsu/irads/master/site/index.json russian-ads.db
+RUN python fetch_and_build_russian_ads.py https://raw.githubusercontent.com/umd-mith/irads/master/site/index.json russian-ads.db
 RUN datasette inspect russian-ads.db --inspect-file inspect-data.json
 
-EXPOSE 8001
+EXPOSE $PORT
 
-CMD datasette serve russian-ads.db --host 0.0.0.0 --cors --port 8001 \
+CMD datasette serve russian-ads.db --host 0.0.0.0 --cors --port $PORT \
   --inspect-file inspect-data.json -m russian-ads-metadata.json \
   --config default_page_size:50 --config sql_time_limit_ms:3000 \
   --config num_sql_threads:10 --config facet_time_limit_ms:3000 \
