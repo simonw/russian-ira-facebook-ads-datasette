@@ -7,14 +7,14 @@ of redacted PDF files.
 Companion blog post: [Analyzing US Election Russian Facebook Ads](https://simonwillison.net/2018/Aug/6/russian-facebook-ads/)
 
 Ed Summers wrote a parser that converts those PDFs into a JSON file:
-https://github.com/edsu/irads
+https://github.com/umd-mith/irads
 
 The script in this repository downloads that JSON file and converts it into a
 SQLite database for use with Datasette. Use it like this:
 
     pip3 install sqlite-utils
     python3 fetch_and_build_russian_ads.py \
-        https://raw.githubusercontent.com/edsu/irads/master/site/index.json \
+        https://raw.githubusercontent.com/umd-mith/irads/master/site/index.json \
         russian-ads.db
 
 This will produce a SQLite database called `ads.db`. You can then explore it

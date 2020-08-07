@@ -97,7 +97,7 @@ def main(dbfile, url):
     db.create_view("display_ads", """
         select ads.id,
             case when image is not null then
-                json_object("img_src", "https://raw.githubusercontent.com/edsu/irads/03fb4b/site/" || image, "width", 200)
+                json_object("img_src", "https://raw.githubusercontent.com/umd-mith/irads/master/site/" || image, "width", 200)
             else
                 "no image"
             end as img,

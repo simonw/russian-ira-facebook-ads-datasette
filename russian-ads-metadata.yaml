@@ -32,7 +32,7 @@ description_html: |-
 
   <p>Full background on this project can be found on my blog: <a href="https://simonwillison.net/2018/Aug/6/russian-facebook-ads/">Analyzing US Election Russian Facebook Ads</a></p>
 
-  <p>A big thanks to Ed Summers who <a href="https://github.com/edsu/irads">built the code</a>
+  <p>A big thanks to Ed Summers who <a href="https://github.com/umd-mith/irads">built the code</a>
   that extracts raw information and metadata from the PDFs released by Congress.</p>
 
   <p>The code by Simon Willison that loads that data into this Datasette instance is
