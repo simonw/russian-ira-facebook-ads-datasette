@@ -1,0 +1,5 @@
+datasette
+datasette-publish-vercel
+datasette-json-html
+datasette-block-robots
+datasette-hashed-urls
